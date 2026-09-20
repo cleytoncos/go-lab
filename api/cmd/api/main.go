@@ -33,6 +33,11 @@ func main() {
 	defer pool.Close()
 	log.Println("Conectado ao PostgreSQL")
 
+	if err := db.RunMigrations(cfg.DSN); err != nil {
+		log.Fatalf("Erro ao aplicar migrations: %v", err)
+	}
+	log.Println("Migrations aplicadas com sucesso")
+
 	router := routes.Register(pool)
 
 	addr := fmt.Sprintf(":%s", cfg.Port)
