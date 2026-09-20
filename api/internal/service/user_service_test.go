@@ -69,8 +69,12 @@ func TestGetAll_Empty(t *testing.T) {
 func TestGetAll_WithUsers(t *testing.T) {
 	svc := newService()
 
-	svc.Create(&domain.CreateUserRequest{Name: "João", Email: "joao@email.com"})
-	svc.Create(&domain.CreateUserRequest{Name: "Maria", Email: "maria@email.com"})
+	if _, err := svc.Create(&domain.CreateUserRequest{Name: "João", Email: "joao@email.com"}); err != nil {
+		t.Fatalf("erro ao criar usuário: %v", err)
+	}
+	if _, err := svc.Create(&domain.CreateUserRequest{Name: "Maria", Email: "maria@email.com"}); err != nil {
+		t.Fatalf("erro ao criar usuário: %v", err)
+	}
 
 	users, err := svc.GetAll()
 	if err != nil {
