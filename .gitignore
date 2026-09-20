@@ -1,0 +1,9 @@
+# Binários
+*.exe
+*.exe~
+
+# Variáveis de ambiente (contém segredos — nunca commitar)
+.env
+
+# Gerado pelo swag
+api/docs/
