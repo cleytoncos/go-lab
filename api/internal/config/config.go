@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -11,7 +12,7 @@ import (
 type Config struct {
 	Port string
 	Env  string
-	DSN  string // Data Source Name para conexão com banco
+	DSN  string // Data Source Name montada a partir das variáveis de banco
 }
 
 // Load lê o arquivo .env (se existir) e as variáveis de ambiente,
@@ -24,8 +25,19 @@ func Load() *Config {
 	return &Config{
 		Port: getEnv("PORT", "8080"),
 		Env:  getEnv("ENV", "development"),
-		DSN:  getEnv("DATABASE_URL", ""),
+		DSN:  buildDSN(),
 	}
+}
+
+// buildDSN monta a connection string a partir das variáveis individuais de banco.
+func buildDSN() string {
+	return fmt.Sprintf("postgres://%s:%s@%s:%s/%s",
+		getEnv("DB_USER", ""),
+		getEnv("DB_PASSWORD", ""),
+		getEnv("DB_HOST", "localhost"),
+		getEnv("DB_PORT", "5432"),
+		getEnv("DB_NAME", ""),
+	)
 }
 
 func getEnv(key, fallback string) string {
