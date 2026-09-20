@@ -51,7 +51,9 @@ func TestGetAll_WithUsers(t *testing.T) {
 	}
 
 	var users []domain.User
-	json.NewDecoder(w.Body).Decode(&users)
+	if err := json.NewDecoder(w.Body).Decode(&users); err != nil {
+		t.Fatalf("erro ao decodificar resposta: %v", err)
+	}
 	if len(users) != 1 {
 		t.Errorf("esperava 1 usuário, obteve %d", len(users))
 	}
@@ -74,7 +76,9 @@ func TestCreate_Success(t *testing.T) {
 	}
 
 	var user domain.User
-	json.NewDecoder(w.Body).Decode(&user)
+	if err := json.NewDecoder(w.Body).Decode(&user); err != nil {
+		t.Fatalf("erro ao decodificar resposta: %v", err)
+	}
 	if user.ID == 0 {
 		t.Error("esperava ID preenchido na resposta")
 	}
@@ -125,7 +129,9 @@ func TestGetByID_Found(t *testing.T) {
 	h.Create(wCreate, req)
 
 	var created domain.User
-	json.NewDecoder(wCreate.Body).Decode(&created)
+	if err := json.NewDecoder(wCreate.Body).Decode(&created); err != nil {
+		t.Fatalf("erro ao decodificar resposta: %v", err)
+	}
 
 	req = httptest.NewRequest(http.MethodGet, "/users/1", nil)
 	w := httptest.NewRecorder()
@@ -136,7 +142,9 @@ func TestGetByID_Found(t *testing.T) {
 	}
 
 	var user domain.User
-	json.NewDecoder(w.Body).Decode(&user)
+	if err := json.NewDecoder(w.Body).Decode(&user); err != nil {
+		t.Fatalf("erro ao decodificar resposta: %v", err)
+	}
 	if user.ID != created.ID {
 		t.Errorf("esperava ID %d, obteve %d", created.ID, user.ID)
 	}
