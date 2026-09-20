@@ -25,3 +25,20 @@ jobs:
       - name: Run tests
         working-directory: api
         run: go test ./internal/... -v
+
+      - name: Check coverage
+        working-directory: api
+        run: |
+          go test ./internal/config/... ./internal/handler/... ./internal/service/... -coverprofile=coverage.out
+          go tool cover -func=coverage.out | tee /dev/stderr | awk '
+            /^total:/ {
+              pct = $3
+              gsub(/%/, "", pct)
+              if (pct + 0 < 80) {
+                print "ERRO: cobertura total " pct "% está abaixo do mínimo de 80%"
+                exit 1
+              } else {
+                print "OK: cobertura total " pct "% >= 80%"
+              }
+            }
+          '
