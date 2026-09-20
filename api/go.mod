@@ -1,6 +1,6 @@
 module go-lab/api
 
-go 1.25.0
+go 1.23.0
 
 require (
 	github.com/KyleBanks/depth v1.2.1 // indirect
@@ -12,7 +12,7 @@ require (
 	github.com/go-openapi/swag v0.19.15 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
-	github.com/jackc/pgx/v5 v5.7.2 // indirect
+	github.com/jackc/pgx/v5 v5.6.0 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/mailru/easyjson v0.7.6 // indirect
