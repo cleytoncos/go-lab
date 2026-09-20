@@ -7,3 +7,7 @@
 
 # Gerado pelo swag
 api/docs/
+
+# Cobertura de testes
+*.out
+coverage
